@@ -16,7 +16,7 @@ Global variable di dalam php di deklarasikan di luar function atau cakupan terte
 
 
 
-![App Screenshot](./Variable-scope/images/code.png)
+![App Screenshot](images/code.png)
 
 Kode tersebut akan menghasilkan error karena PHP tidak mengenali variable $x itu apa meskipun sudah di deklarasikan di baris 2 karena variabel $x berada diluar function TampilkanX(), untuk mengakses variable $x maka di gunakan di luar function TampilkanX().
 
@@ -24,7 +24,7 @@ Kode tersebut akan menghasilkan error karena PHP tidak mengenali variable $x itu
 
 Agar variable $x bisa digunakan di dalam function TampilkanX() gunakan keyword seperti gambar dibawah.
 
-![App Screenshot](./Variable-scope/images/code2.png)
+![App Screenshot](images/code2.png)
 
 Dengan menggunakan keyword globak maka PHP mengenali variable $x dan program tidak terjadi error.
 
