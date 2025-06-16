@@ -1,10 +1,19 @@
 <?php
+
+
+
 $nama = $_GET['nama'];
 $harga = $_GET['harga'];
 $stok = $_GET['stok'];
 $berat = $_GET['berat'];
 $merk = $_GET['merk'];
 $kategori = $_GET['kategori'];
+
+
+if (!isset($_GET['nama'])) {
+    header("Location: index.php");
+    exit;
+}
 
 ?>
 <!doctype html>
