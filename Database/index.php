@@ -2,6 +2,20 @@
 require 'functions.php';
 
 $products = show("SELECT * FROM product");
+$newProductCode = generateProductCode($conn);
+
+if (isset($_POST['store'])) {
+    if (store($_POST) > 0) {
+
+        header("Location: index.php");
+        exit;
+    } else {
+
+        header("Location: index.php");
+        exit;
+    }
+}
+
 ?>
 
 
@@ -31,6 +45,7 @@ $products = show("SELECT * FROM product");
                             <th>Nama Barang</th>
                             <th>Harga</th>
                             <th>Stok</th>
+                            <th>Aksi</th>
 
                         </tr>
                     </thead>
@@ -43,6 +58,10 @@ $products = show("SELECT * FROM product");
                                 <td><?= $product['name'] ?></td>
                                 <td><?= $product['price'] ?></td>
                                 <td><?= $product['stock'] ?></td>
+                                <td>
+                                    <a class="btn btn-warning">Edit</a>
+                                    <a class="btn btn-danger" href="hapus.php?id=<?= $product['product_code'] ?>" onclick="confirm('Yakin ?')">Hapus</a>
+                                </td>
 
                             </tr>
                         <?php endforeach ?>
@@ -58,40 +77,40 @@ $products = show("SELECT * FROM product");
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="store-data.php" method="post">
+                                <form action="" method="post">
                                     <div class="container-fluid">
                                         <div class="row d-flex gap-4">
                                             <div class="input-group">
                                                 <div class="col-3">
-                                                    <label for="kode_barang" class="col-form-label">Kode Barang</label>
+                                                    <label for="product_code" class="col-form-label">Kode Barang</label>
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" id="kode_barang" class="form-control" name="kode_barang" required>
+                                                    <input type="text" id="product_code" class="form-control" name="product_code" value="<?= $newProductCode ?>" readonly required>
                                                 </div>
                                             </div>
                                             <div class="input-group">
                                                 <div class="col-3">
-                                                    <label for="nama_barang" class="col-form-label">Nama Barang</label>
+                                                    <label for="product_name" class="col-form-label">Nama Barang</label>
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="text" id="nama_barang" name="nama_barang" class="form-control" required>
+                                                    <input type="text" id="product_name" name="product_name" class="form-control" required>
                                                 </div>
                                             </div>
 
                                             <div class="input-group">
                                                 <div class="col-3">
-                                                    <label for="harga_barang" class="col-form-label">Harga</label>
+                                                    <label for="product_price" class="col-form-label">Harga</label>
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="number" name="harga_barang" id="harga_barang" class="form-control" required>
+                                                    <input type="number" name="product_price" id="product_price" class="form-control" required>
                                                 </div>
                                             </div>
                                             <div class="input-group">
                                                 <div class="col-3">
-                                                    <label for="stok" class="col-form-label">Stok</label>
+                                                    <label for="product_stock" class="col-form-label">Stok</label>
                                                 </div>
                                                 <div class="col-9">
-                                                    <input type="number" name="stok_barang" id="stok" class="form-control" required>
+                                                    <input type="number" name="product_stock" id="product_stock" class="form-control" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -100,7 +119,7 @@ $products = show("SELECT * FROM product");
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="btn btn-primary" name="store">Simpan</button>
                             </div>
                             </form>
                         </div>
@@ -109,7 +128,6 @@ $products = show("SELECT * FROM product");
             </div>
         </div>
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
