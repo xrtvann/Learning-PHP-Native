@@ -45,6 +45,98 @@ include 'produk.php';
             <?php endforeach ?>
           </tbody>
         </table>
+        <button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-success w-100 mt-4" type="submit" name="submit">Tambah Data </button>
+
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Data</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="store-data.php" method="post">
+                  <div class="container-fluid">
+                    <div class="row d-flex gap-4">
+                      <div class="input-group">
+                        <div class="col-3">
+                          <label for="kode_barang" class="col-form-label">Kode Barang</label>
+                        </div>
+                        <div class="col-9">
+                          <input type="text" id="kode_barang" class="form-control" name="kode_barang" required>
+                        </div>
+                      </div>
+                      <div class="input-group">
+                        <div class="col-3">
+                          <label for="nama_barang" class="col-form-label">Nama Barang</label>
+                        </div>
+                        <div class="col-9">
+                          <input type="text" id="nama_barang" name="nama_barang" class="form-control" required>
+                        </div>
+                      </div>
+
+                      <div class="input-group">
+                        <div class="col-3">
+                          <label for="harga_barang" class="col-form-label">Harga</label>
+                        </div>
+                        <div class="col-9">
+                          <input type="number" name="harga_barang" id="harga_barang" class="form-control" required>
+                        </div>
+                      </div>
+                      <div class="input-group">
+                        <div class="col-3">
+                          <label for="stok" class="col-form-label">Stok</label>
+                        </div>
+                        <div class="col-9">
+                          <input type="number" name="stok_barang" id="stok" class="form-control" required>
+                        </div>
+                      </div>
+                      <div class="input-group">
+                        <div class="col-3">
+                          <label for="merek" class="col-form-label">Merek</label>
+                        </div>
+                        <div class="col-9">
+                          <input type="text" name="merek_barang" id="merek" class="form-control" required>
+                        </div>
+                      </div>
+                      <div class="input-group">
+                        <div class="col-3">
+                          <label for="berat" class="col-form-label">Berat</label>
+                        </div>
+                        <div class="col-9">
+                          <div class="input-group">
+                            <input type="number" name="berat_barang" id="berat" class="form-control" required>
+                            <span class="input-group-text" id="basic-addon2">/kg</span>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="input-group">
+                        <div class="col-3">
+                          <label for="kategori" class="col-form-label">kategori</label>
+                        </div>
+                        <div class="col-9">
+                          <select required class="form-select" aria-label="Default select example" name="kategori_barang">
+                            <option selected>Pilih Kategori</option>
+                            <option value="Kebutuhan Rumah Tangga">Kebutuhan Rumah Tangga</option>
+                            <option value="Elektronik">Elektronik</option>
+
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
