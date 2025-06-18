@@ -72,7 +72,7 @@ if (isset($_POST['update'])) {
                                 <td><?= $product['stock'] ?></td>
                                 <td>
                                     <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $product['product_code'] ?>">Edit</a>
-                                    <a class="btn btn-danger" href="hapus.php?id=<?= $product['product_code'] ?>" onclick="confirm('Yakin ?')">Hapus</a>
+                                    <a class="btn btn-danger" href="hapus.php?id=<?= $product['product_code'] ?>" onclick="return confirm('Yakin ?')">Hapus</a>
                                 </td>
 
                             </tr>
