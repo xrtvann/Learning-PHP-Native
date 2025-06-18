@@ -50,8 +50,30 @@ function store($data)
     return mysqli_affected_rows($conn);
 }
 
+function update($data)
+{
+    global $conn;
+    $productCode = htmlspecialchars($data['product_code']);
+    $productName = htmlspecialchars($data['product_name']);
+    $productPrice = htmlspecialchars($data['product_price']);
+    $productStock = htmlspecialchars($data['product_stock']);
 
-function delete($id) {
+    $query = "UPDATE product SET
+             product_code = '$productCode',
+             name = '$productName',
+             price = '$productPrice',
+             stock = '$productStock'
+             WHERE product_code = '$productCode'
+    ";
+
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+
+function delete($id)
+{
     global $conn;
 
     $query = "DELETE FROM product WHERE product_code = '$id'";

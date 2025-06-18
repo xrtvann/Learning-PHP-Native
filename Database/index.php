@@ -16,6 +16,18 @@ if (isset($_POST['store'])) {
     }
 }
 
+if (isset($_POST['update'])) {
+    if (update($_POST) > 0) {
+
+        header("Location: index.php");
+        exit;
+    } else {
+
+        header("Location: index.php");
+        exit;
+    }
+}
+
 ?>
 
 
@@ -59,17 +71,74 @@ if (isset($_POST['store'])) {
                                 <td><?= $product['price'] ?></td>
                                 <td><?= $product['stock'] ?></td>
                                 <td>
-                                    <a class="btn btn-warning">Edit</a>
+                                    <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $product['product_code'] ?>">Edit</a>
                                     <a class="btn btn-danger" href="hapus.php?id=<?= $product['product_code'] ?>" onclick="confirm('Yakin ?')">Hapus</a>
                                 </td>
 
                             </tr>
+
+                            <div class="modal fade" id="edit<?= $product['product_code'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Ubah Data</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="" method="post">
+                                                <div class="container-fluid">
+                                                    <div class="row d-flex gap-4">
+                                                        <div class="input-group">
+                                                            <div class="col-3">
+                                                                <label for="product_code" class="col-form-label">Kode Barang</label>
+                                                            </div>
+                                                            <div class="col-9">
+                                                                <input type="text" id="product_code" class="form-control" name="product_code" value="<?= $product['product_code'] ?>" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <div class="col-3">
+                                                                <label for="product_name" class="col-form-label">Nama Barang</label>
+                                                            </div>
+                                                            <div class="col-9">
+                                                                <input type="text" id="product_name" name="product_name" class="form-control" value="<?= $product['name'] ?>" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="input-group">
+                                                            <div class="col-3">
+                                                                <label for="product_price" class="col-form-label">Harga</label>
+                                                            </div>
+                                                            <div class="col-9">
+                                                                <input type="number" name="product_price" id="product_price" class="form-control" value="<?= $product['price'] ?>" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <div class="col-3">
+                                                                <label for="product_stock" class="col-form-label">Stok</label>
+                                                            </div>
+                                                            <div class="col-9">
+                                                                <input type="number" name="product_stock" id="product_stock" class="form-control" value="<?= $product['stock'] ?>" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-primary" name="update">Simpan Perubahan</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         <?php endforeach ?>
                     </tbody>
                 </table>
-                <button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-success w-100 mt-4" type="submit" name="submit">Tambah Data </button>
+                <button data-bs-toggle="modal" data-bs-target="#store" class="btn btn-success w-100 mt-4" type="submit" name="submit">Tambah Data </button>
 
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="store" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -125,6 +194,8 @@ if (isset($_POST['store'])) {
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
