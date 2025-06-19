@@ -81,3 +81,13 @@ function delete($id)
 
     return mysqli_affected_rows($conn);
 }
+
+function search($keyword)
+{
+
+    $query = "SELECT * FROM product WHERE 
+    name LIKE '%$keyword%' OR 
+    product_code LIKE  '%$keyword%'";
+
+    return show($query);
+}

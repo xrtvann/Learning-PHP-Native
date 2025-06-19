@@ -28,6 +28,11 @@ if (isset($_POST['update'])) {
     }
 }
 
+if (isset($_POST['search'])) {
+    $keyword = $_POST['keyword'];
+    $products = search($keyword);
+}
+
 ?>
 
 
@@ -44,11 +49,20 @@ if (isset($_POST['update'])) {
 <body>
 
     <div class="container my-5">
+
+
         <div class="card">
             <div class="card-header p-3 text-center">
                 <h3>Daftar Produk</h3>
             </div>
             <div class="card-body p-5">
+                <div class="search-box col-md-6 mb-4">
+                    <form action="" method="post" class="d-flex align-items-center">
+
+                        <input type="text" name="keyword" id="" class="form-control me-3" placeholder="Search">
+                        <button type="submit" name="search" class="btn btn-secondary">Cari</button>
+                    </form>
+                </div>
                 <table class="table table-striped">
                     <thead>
                         <tr>
