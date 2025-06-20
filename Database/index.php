@@ -68,6 +68,7 @@ if (isset($_POST['search'])) {
                         <tr>
                             <th>No</th>
                             <th>Kode Barang</th>
+                            <th>Gambar</th>
                             <th>Nama Barang</th>
                             <th>Harga</th>
                             <th>Stok</th>
@@ -81,6 +82,9 @@ if (isset($_POST['search'])) {
                             <tr>
                                 <td><?= $i++ ?></td>
                                 <td><?= $product['product_code'] ?></td>
+                                <td>
+                                    <img src="image/<?= $product['image'] ?>" alt="" width="60">
+                                </td>
                                 <td><?= $product['name'] ?></td>
                                 <td><?= $product['price'] ?></td>
                                 <td><?= $product['stock'] ?></td>
@@ -92,6 +96,7 @@ if (isset($_POST['search'])) {
                             </tr>
 
                             <div class="modal fade" id="edit<?= $product['product_code'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
                                 <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -99,7 +104,8 @@ if (isset($_POST['search'])) {
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="" method="post">
+                                            <form action="" method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="old_image" value="<?= $product['image'] ?>">
                                                 <div class="container-fluid">
                                                     <div class="row d-flex gap-4">
                                                         <div class="input-group">
@@ -107,7 +113,7 @@ if (isset($_POST['search'])) {
                                                                 <label for="product_code" class="col-form-label">Kode Barang</label>
                                                             </div>
                                                             <div class="col-9">
-                                                                <input type="text" id="product_code" class="form-control" name="product_code" value="<?= $product['product_code'] ?>" required>
+                                                                <input type="text" id="product_code" class="form-control" name="product_code" value="<?= $product['product_code'] ?>" readonly disabled required>
                                                             </div>
                                                         </div>
                                                         <div class="input-group">
@@ -135,6 +141,17 @@ if (isset($_POST['search'])) {
                                                                 <input type="number" name="product_stock" id="product_stock" class="form-control" value="<?= $product['stock'] ?>" required>
                                                             </div>
                                                         </div>
+                                                        <div class="input-group">
+                                                            <div class="col-3">
+                                                                <label for="product_image" class="col-form-label">Gambar</label>
+                                                            </div>
+                                                            <div class="col-9">
+                                                                <input type="file" name="product_image" id="product_image" class="form-control">
+                                                                <div class="img-wrapper card mt-5 p-3">
+                                                                    <img src="image/<?= $product['image'] ?>" alt="" width="200">
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -160,7 +177,7 @@ if (isset($_POST['search'])) {
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="" method="post">
+                                <form action="" method="post" enctype="multipart/form-data">
                                     <div class="container-fluid">
                                         <div class="row d-flex gap-4">
                                             <div class="input-group">
@@ -194,6 +211,14 @@ if (isset($_POST['search'])) {
                                                 </div>
                                                 <div class="col-9">
                                                     <input type="number" name="product_stock" id="product_stock" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="input-group">
+                                                <div class="col-3">
+                                                    <label for="product_image" class="col-form-label">Gambar</label>
+                                                </div>
+                                                <div class="col-9">
+                                                    <input type="file" name="product_image" id="product_image" class="form-control" required>
                                                 </div>
                                             </div>
                                         </div>

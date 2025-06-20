@@ -42,8 +42,13 @@ function store($data)
     $productName = htmlspecialchars($data['product_name']);
     $productPrice = htmlspecialchars($data['product_price']);
     $productStock = htmlspecialchars($data['product_stock']);
+    $productImage = uploadImage();
 
-    $query = "INSERT INTO product VALUES('$productCode', '$productName', '$productPrice', '$productStock')";
+    if (!$productImage) {
+        return false;
+    }
+
+    $query = "INSERT INTO product VALUES('$productCode', '$productName', '$productPrice', '$productStock', '$productImage')";
 
     mysqli_query($conn, $query);
 
@@ -57,12 +62,22 @@ function update($data)
     $productName = htmlspecialchars($data['product_name']);
     $productPrice = htmlspecialchars($data['product_price']);
     $productStock = htmlspecialchars($data['product_stock']);
+    $oldProductImage = htmlspecialchars($data['old_image']);
+
+    if ($_FILES['product_image']['error'] === 4) {
+        $productImage = $oldProductImage;
+    }  else {
+        $productImage = uploadImage();
+    }
+
+
 
     $query = "UPDATE product SET
              product_code = '$productCode',
              name = '$productName',
              price = '$productPrice',
-             stock = '$productStock'
+             stock = '$productStock',
+             image = '$productImage' 
              WHERE product_code = '$productCode'
     ";
 
@@ -90,4 +105,39 @@ function search($keyword)
     product_code LIKE  '%$keyword%'";
 
     return show($query);
+}
+
+function  uploadImage()
+{
+
+    $name = $_FILES['product_image']['name'];
+    $size = $_FILES['product_image']['size'];
+    $error = $_FILES['product_image']['error'];
+    $tmpName = $_FILES['product_image']['tmp_name'];
+
+    if ($error === 4) {
+        echo "<script>
+            alert('Pilih gambar terlebih dahulu!')
+        </script>";
+        return false;
+    }
+
+    $extensionImageAccepted = ['jpg', 'jpeg', 'png'];
+    $extensionImage = explode('.', $name);
+    $extensionImage = strtolower(end($extensionImage));
+
+    $randomImageName = uniqid();
+    $randomImageName .= '.';
+    $randomImageName .= $extensionImage;
+
+    if (!in_array($extensionImage, $extensionImageAccepted)) {
+        echo "<script>
+            alert('Format gambar tidak didukung!')
+        </script>";
+        return false;
+    }
+
+    move_uploaded_file($tmpName, 'image/' . $randomImageName);
+
+    return $randomImageName;
 }
