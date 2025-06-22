@@ -66,7 +66,7 @@ function update($data)
 
     if ($_FILES['product_image']['error'] === 4) {
         $productImage = $oldProductImage;
-    }  else {
+    } else {
         $productImage = uploadImage();
     }
 
@@ -140,4 +140,36 @@ function  uploadImage()
     move_uploaded_file($tmpName, 'image/' . $randomImageName);
 
     return $randomImageName;
+}
+
+
+function register($data)
+{
+    global $conn;
+
+    $username = strtolower(stripslashes($data['username']));
+    $password = mysqli_escape_string($conn, $data['password']);
+    $confirmationPassword = mysqli_escape_string($conn, $data['confirmation_password']);
+
+    $checkUsername = mysqli_query($conn, "SELECT username FROM user WHERE username = '$username'");
+
+    if (mysqli_fetch_assoc($checkUsername)) {
+        echo "<script>
+            alert('Username sudah digunakan');location = 'registrasi.php';
+        </script>";
+        return false;
+    }
+
+    if ($password !== $confirmationPassword) {
+        echo "<script>
+            alert('Password tidak sesuai');location = 'registrasi.php';
+        </script>";
+        return false;
+    }
+
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    mysqli_query($conn, "INSERT INTO user VALUES(NULL,'$username', '$password')");
+
+    return mysqli_affected_rows($conn);
 }
