@@ -1,17 +1,6 @@
 <?php
 require 'functions.php';
 
-if (isset($_POST['register'])) {
-    if (register($_POST) > 0) {
-        echo "<script>
-            alert('Registrasi berhasil !');location = 'index.php';
-        </script>";
-        exit;
-    } else {
-        exit;
-    }
-}
-
 ?>
 
 
@@ -32,7 +21,7 @@ if (isset($_POST['register'])) {
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header p-3 text-center">
-                    <h3>Registrasi</h3>
+                    <h3>Login</h3>
                 </div>
                 <div class="card-body p-5">
                     <form action="" method="post">
@@ -55,14 +44,7 @@ if (isset($_POST['register'])) {
                                     </div>
                                 </div>
 
-                                <div class="input-group">
-                                    <div class="col-3">
-                                        <label for="confirmation_password" class="col-form-label">Konfirmasi Password</label>
-                                    </div>
-                                    <div class="col-9">
-                                        <input type="password" name="confirmation_password" id="confirmation_password" class="form-control" required>
-                                    </div>
-                                </div>
+                          
                                 <div class="input-group">
                                     <div class="col-md-6">
                                         <div class="form-check">
@@ -76,8 +58,8 @@ if (isset($_POST['register'])) {
 
                                 <div class="input-group">
                                     <div class="col-12">
-                                        <p class="fw-light">Sudah punya akun ? silahkan <a href="login.php" class="text-decoration-none text-dark">masuk </a></p>
-                                        <button type="submit" name="register" class="btn btn-primary w-100">Daftar</button>
+                                        <p class="fw-light">Belum punya akun ? silahkan <a href="registrasi.php" class="text-decoration-none text-dark">daftar </a></p>
+                                        <button type="submit" name="register" class="btn btn-primary w-100">Masuk</button>
                                     </div>
                                 </div>
                             </div>
