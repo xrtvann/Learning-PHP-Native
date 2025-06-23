@@ -1,5 +1,11 @@
 <?php
+session_start();
 require 'functions.php';
+
+if (!isset($_SESSION['login']) || !$_SESSION['login']) {
+    header('Location: login.php');
+    exit;
+}
 
 $products = show("SELECT * FROM product");
 $newProductCode = generateProductCode($conn);
@@ -56,13 +62,17 @@ if (isset($_POST['search'])) {
                 <h3>Daftar Produk</h3>
             </div>
             <div class="card-body p-5">
-                <div class="search-box col-md-6 mb-4">
-                    <form action="" method="post" class="d-flex align-items-center">
+                <div class="wrapper d-flex justify-content-between mb-4">
+                    <div class="search-box col-md-6">
+                        <form action="" method="post" class="d-flex align-items-center">
 
-                        <input type="text" name="keyword" id="" class="form-control me-3" placeholder="Search">
-                        <button type="submit" name="search" class="btn btn-secondary">Cari</button>
-                    </form>
+                            <input type="text" name="keyword" id="" class="form-control me-3" placeholder="Search">
+                            <button type="submit" name="search" class="btn btn-secondary">Cari</button>
+                        </form>
+                    </div>
+                    <a class="logout-button btn btn-danger" href="logout.php">Logout</a>
                 </div>
+
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -113,7 +123,7 @@ if (isset($_POST['search'])) {
                                                                 <label for="product_code" class="col-form-label">Kode Barang</label>
                                                             </div>
                                                             <div class="col-9">
-                                                                <input type="text" id="product_code" class="form-control" name="product_code" value="<?= $product['product_code'] ?>" readonly disabled required>
+                                                                <input type="text" id="product_code" class="form-control" name="product_code" value="<?= $product['product_code'] ?>" readonly required>
                                                             </div>
                                                         </div>
                                                         <div class="input-group">

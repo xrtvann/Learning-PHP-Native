@@ -1,7 +1,5 @@
 <?php
-
 include 'connection.php';
-
 function show($query)
 {
     global $conn;
@@ -188,8 +186,12 @@ function login()
         $row = mysqli_fetch_assoc($result);
 
         if (password_verify($password, $row['password'])) {
-            header("Location: index.php");
-            exit;
+
+            $_SESSION['login'] = true;
+            header('Location: index.php');
+            return true;
         }
     }
+
+    return false;
 }

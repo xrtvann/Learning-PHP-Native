@@ -1,9 +1,15 @@
 <?php
+session_start();
 require 'functions.php';
+
+if (isset($_SESSION['login']) && $_SESSION['login']) {
+    header('Location: index.php');
+    exit;
+}
 
 if (isset($_POST['login'])) {
     if (login()) {
-        return true;
+        exit;
     } else {
         echo "<script>
         alert('username atau password salah !');location = 'login.php';
