@@ -7,8 +7,6 @@ if (isset($_POST['register'])) {
             alert('Registrasi berhasil !');location = 'index.php';
         </script>";
         exit;
-    } else {
-        exit;
     }
 }
 

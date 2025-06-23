@@ -1,6 +1,17 @@
 <?php
 require 'functions.php';
 
+if (isset($_POST['login'])) {
+    if (login()) {
+        return true;
+    } else {
+        echo "<script>
+        alert('username atau password salah !');location = 'login.php';
+        </script>";
+        exit;
+    }
+}
+
 ?>
 
 
@@ -44,7 +55,7 @@ require 'functions.php';
                                     </div>
                                 </div>
 
-                          
+
                                 <div class="input-group">
                                     <div class="col-md-6">
                                         <div class="form-check">
@@ -59,7 +70,7 @@ require 'functions.php';
                                 <div class="input-group">
                                     <div class="col-12">
                                         <p class="fw-light">Belum punya akun ? silahkan <a href="registrasi.php" class="text-decoration-none text-dark">daftar </a></p>
-                                        <button type="submit" name="register" class="btn btn-primary w-100">Masuk</button>
+                                        <button type="submit" name="login" class="btn btn-primary w-100">Masuk</button>
                                     </div>
                                 </div>
                             </div>

@@ -173,3 +173,23 @@ function register($data)
 
     return mysqli_affected_rows($conn);
 }
+
+function login()
+{
+    global $conn;
+
+    $username = htmlspecialchars($_POST['username']);
+    $password = htmlspecialchars($_POST['password']);
+
+    $result = mysqli_query($conn, "SELECT * FROM user WHERE username = '$username'");
+
+    if (mysqli_num_rows($result) === 1) {
+
+        $row = mysqli_fetch_assoc($result);
+
+        if (password_verify($password, $row['password'])) {
+            header("Location: index.php");
+            exit;
+        }
+    }
+}
