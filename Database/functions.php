@@ -188,6 +188,12 @@ function login()
         if (password_verify($password, $row['password'])) {
 
             $_SESSION['login'] = true;
+
+            if (isset($_POST['remember_me'])) {
+                setcookie('id', $row['id'], time() + 60);
+                setcookie('key', hash('sha256', $row['username']), time() + 60);
+            }
+
             header('Location: index.php');
             return true;
         }
