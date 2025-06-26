@@ -7,7 +7,40 @@ if (!isset($_SESSION['login']) || !$_SESSION['login']) {
     exit;
 }
 
-$products = show("SELECT * FROM product");
+
+
+$dataPerPage = 5;
+$result = mysqli_query($conn, "SELECT * FROM product");
+$dataAmount = mysqli_num_rows($result);
+
+$pageAmount = ceil($dataAmount / $dataPerPage);
+
+$activedPage = isset($_GET['page']) ? $_GET['page'] : 1;
+
+$start = ($activedPage * $dataPerPage) - $dataPerPage;
+
+function previousButton($activedPage)
+{
+    if ($activedPage > 1) {
+        $activedPage = $activedPage - 1;
+    }
+
+    return $activedPage;
+}
+
+function nextButton($activedPage, $totalPages)
+{
+
+    if ($activedPage < $totalPages) {
+        $activedPage = $activedPage + 1;
+    } else {
+        $activedPage = $totalPages;
+    }
+
+    return $activedPage;
+}
+
+$products = show("SELECT * FROM product LIMIT $start, $dataPerPage");
 $newProductCode = generateProductCode($conn);
 
 if (isset($_POST['store'])) {
@@ -38,6 +71,7 @@ if (isset($_POST['search'])) {
     $keyword = $_POST['keyword'];
     $products = search($keyword);
 }
+
 
 ?>
 
@@ -87,7 +121,7 @@ if (isset($_POST['search'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i = 1; ?>
+                        <?php $i = $start + 1; ?>
                         <?php foreach ($products as $product): ?>
                             <tr>
                                 <td><?= $i++ ?></td>
@@ -177,6 +211,26 @@ if (isset($_POST['search'])) {
                         <?php endforeach ?>
                     </tbody>
                 </table>
+                <div class="pagination d-flex justify-content-center mt-5">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+
+
+
+                            <li class="page-item <?= ($activedPage == 1) ? 'disabled' : '' ?>"><a class="page-link" href="?page=<?= previousButton($activedPage) ?>">Previous</a></li>
+
+
+                            <?php for ($i = 1; $i <= $pageAmount; $i++) : ?>
+                                <?php if ($i == $activedPage) : ?>
+                                    <li class="page-item"><a class="page-link active" href="?page=<?= $i; ?>"><?= $i; ?></a></li>
+                                <?php else : ?>
+                                    <li class="page-item"><a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a></li>
+                                <?php endif; ?>
+                            <?php endfor; ?>
+                            <li class="page-item <?= ($activedPage == $pageAmount) ? 'disabled' : '' ?>"><a class="page-link" href="?page=<?= nextButton($activedPage, $pageAmount) ?>">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
                 <button data-bs-toggle="modal" data-bs-target="#store" class="btn btn-success w-100 mt-4" type="submit" name="submit">Tambah Data </button>
 
                 <div class="modal fade" id="store" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
