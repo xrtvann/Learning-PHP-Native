@@ -7,38 +7,11 @@ if (!isset($_SESSION['login']) || !$_SESSION['login']) {
     exit;
 }
 
-
-
-$dataPerPage = 5;
-$result = mysqli_query($conn, "SELECT * FROM product");
-$dataAmount = mysqli_num_rows($result);
-
-$pageAmount = ceil($dataAmount / $dataPerPage);
-
-$activedPage = isset($_GET['page']) ? $_GET['page'] : 1;
-
-$start = ($activedPage * $dataPerPage) - $dataPerPage;
-
-function previousButton($activedPage)
-{
-    if ($activedPage > 1) {
-        $activedPage = $activedPage - 1;
-    }
-
-    return $activedPage;
-}
-
-function nextButton($activedPage, $totalPages)
-{
-
-    if ($activedPage < $totalPages) {
-        $activedPage = $activedPage + 1;
-    } else {
-        $activedPage = $totalPages;
-    }
-
-    return $activedPage;
-}
+$pagination = pagination($conn, 'product');
+$start = $pagination['start'];
+$currentPage = $pagination['currentPage'];
+$pageAmount = $pagination['pageAmount'];
+$dataPerPage = $pagination['dataPerPage'];
 
 $products = show("SELECT * FROM product LIMIT $start, $dataPerPage");
 $newProductCode = generateProductCode($conn);
@@ -217,17 +190,17 @@ if (isset($_POST['search'])) {
 
 
 
-                            <li class="page-item <?= ($activedPage == 1) ? 'disabled' : '' ?>"><a class="page-link" href="?page=<?= previousButton($activedPage) ?>">Previous</a></li>
+                            <li class="page-item <?= ($currentPage == 1) ? 'disabled' : '' ?>"><a class="page-link" href="?page=<?= previousButton($currentPage) ?>">Previous</a></li>
 
 
                             <?php for ($i = 1; $i <= $pageAmount; $i++) : ?>
-                                <?php if ($i == $activedPage) : ?>
+                                <?php if ($i == $currentPage) : ?>
                                     <li class="page-item"><a class="page-link active" href="?page=<?= $i; ?>"><?= $i; ?></a></li>
                                 <?php else : ?>
                                     <li class="page-item"><a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a></li>
                                 <?php endif; ?>
                             <?php endfor; ?>
-                            <li class="page-item <?= ($activedPage == $pageAmount) ? 'disabled' : '' ?>"><a class="page-link" href="?page=<?= nextButton($activedPage, $pageAmount) ?>">Next</a></li>
+                            <li class="page-item <?= ($currentPage == $pageAmount) ? 'disabled' : '' ?>"><a class="page-link" href="?page=<?= nextButton($currentPage, $pageAmount) ?>">Next</a></li>
                         </ul>
                     </nav>
                 </div>

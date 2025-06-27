@@ -202,3 +202,50 @@ function login()
     return false;
 }
 
+function pagination($conn, $table, $dataPerPage = 5)
+{
+    $result = mysqli_query($conn, "SELECT COUNT(*) AS total FROM $table");
+    $row = mysqli_fetch_assoc($result);
+    $dataAmount = $row['total'];
+    $pageAmount = ceil($dataAmount / $dataPerPage);
+    $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+
+
+    if ($currentPage < 1) {
+        $currentPage = 1;
+    }
+
+    if ($currentPage > $pageAmount) {
+        $currentPage = $pageAmount;
+    }
+
+    $start = ($currentPage * $dataPerPage) - $dataPerPage;
+
+    return [
+        'start' => $start,
+        'currentPage' => $currentPage,
+        'pageAmount' => $pageAmount,
+        'dataPerPage' => $dataPerPage
+    ];
+}
+
+function previousButton($currentPage)
+{
+    if ($currentPage > 1) {
+        $currentPage = $currentPage - 1;
+    }
+
+    return $currentPage;
+}
+
+function nextButton($currentPage, $totalPages)
+{
+
+    if ($currentPage < $totalPages) {
+        $currentPage = $currentPage + 1;
+    } else {
+        $currentPage = $totalPages;
+    }
+
+    return $currentPage;
+}
