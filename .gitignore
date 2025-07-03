@@ -1,1 +1,4 @@
-/Database/images
+# Ignore all files in the image directory
+/Database/image
+# Ignore all files in the vendor directory
+/Database/vendor

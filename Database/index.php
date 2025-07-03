@@ -78,7 +78,11 @@ if (isset($_POST['search'])) {
                             <button type="submit" name="search" id="searchButton" class="btn btn-secondary">Cari</button>
                         </form>
                     </div>
-                    <a class="logout-button btn btn-danger" href="logout.php">Logout</a>
+                    <div class="button d-flex gap-2">
+                        <a href="print.php" class="btn btn-primary" target="_blank">Print</a>
+                        <a class="logout-button btn btn-danger" href="logout.php">Logout</a>
+                    </div>
+
                 </div>
                 <div id="table-container">
                     <table class="table table-striped">
